@@ -1,0 +1,70 @@
+<!-- creating a button desplaying hello world
+
+<div class="container">
+
+  <div class="center">
+    <h1>Creating a button desplaying a hello world</h1>
+    <button class="button" (click)="clickEvent()">Touch Here to desplay the message</button>                             
+    <h2>{{msg}}</h2>
+  </div>
+</div>       
+
+-->
+
+<!--Creating a table that has new things -->
+
+
+<nav class="navbar navbar-light bg-light center">
+  <span class="navbar-brand mb-0 h1">Table Crud Aplication With Angular</span>
+</nav>
+
+<div class="container2">
+
+<form>
+  <div class="form-group">
+    <input type="text" class="form-control" id="idInput" placeholder="Id del vehichulo" readonly>
+    <input type="text" class="form-control" id="marcaInput" placeholder="Marca del Vehiculo">
+    <input type="text" class="form-control" placeholder="Modelo del Vehiculo" id="modeloInput">
+    <input type="text" class="form-control" placeholder="Año del Vehiculo" id="añoInput">
+    <input type="text" class="form-control" placeholder="Version del Vehiculo" id="versionInput">
+  </div>
+</form>                            
+</div>
+
+<div class="center">
+  <button class="btn btn-primary btn" (click)="addCar()">Agregar vehiculo</button>  
+  <button class="btn btn-primary btn" (click)="deleteRow(cars)">Eliminar Vehiculo</button>  
+  <button class="btn btn-primary btn" (click)="editCar(cars)">Editar Carro</button> 
+</div>
+
+
+<div class="tables">
+
+  <table class="table table-dark table-striped table-hover" id="table">
+    <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Modelo</th>
+      <th scope="col">Año</th>
+      <th scope="col">Version</th>
+    </tr>   
+  </thead>
+    <tbody id="datatable">
+      <!-- en el metodo selectRow() estoy pasando el objeto car que contiene el json con 
+      las informaciones, eso me ayuda a poder recibir los objetos que el usuario haga click 
+      en la tabla del frontend. -->
+      <tr *ngFor="let car of cars" (click)="selectRow(car)" id="row">
+        <td>{{car.id}}</td>
+        <td> {{car.marca}}</td>
+        <td> {{car.modelo}}</td>
+        <td> {{car.year}}</td>
+        <td> {{car.version}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+
