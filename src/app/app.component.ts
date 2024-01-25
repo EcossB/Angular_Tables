@@ -5,6 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { HtmlTagDefinition } from '@angular/compiler';
 import { last } from 'rxjs';
 
+interface cars{
+  id: number,
+  marca: string,
+  modelo: string,
+  year: string,
+  version: string
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,13 +21,14 @@ import { last } from 'rxjs';
   //template: `<h1>Hello world!</h1>`,
   styleUrl: './app.component.css'
 })
+
 export class AppComponent  implements OnInit{
 
   title = 'Tables with Angular!';
 
-  constructor() {  }
+  constructor() { }
 
-   cars = [
+   cars: cars[] = [
     {id: 1 , marca: 'ford', modelo: 'escape', year: '2022', version: '4*4'},
   ];
 
@@ -55,16 +64,10 @@ export class AppComponent  implements OnInit{
 
   pushToCars(){
 
-    // let table = document.getElementById("datatable") as HTMLTableElement
-
-    // console.log("contenido de la tabla" ,table.firstElementChild);
-
-
     //No es buena practica acceder a la interfaz para saber el estado de la data. 
     //lo ideal es que si tenemos la el array de datos en el back podemos consumirlo y saber el estado 
     //del array en tiempo real.  
 
-    // if(!table.firstElementChild){
     if(this.cars.length ==0 ){
       this.cars.push({
         "id": 1,
@@ -95,64 +98,53 @@ export class AppComponent  implements OnInit{
   Estoy usando any porque no estoy especificando de que tipo de objetos entran en el metodo.}
   Si quisiera un tipo de obhjeto en especifico utilizaria una interfaz.
  */
- selectRow(c:any) {
+ selectRow(c:cars) {
 
   console.log(c)
 
-
-
-  this.idInput = document.getElementById("idInput") as HTMLInputElement;
+  this.idInput =  document.getElementById("idInput") as HTMLInputElement;
   this.brand = document.getElementById("marcaInput") as HTMLInputElement;
   this.model = document.getElementById("modeloInput") as HTMLInputElement;
   this.year = document.getElementById("añoInput") as HTMLInputElement;
   this.version = document.getElementById("versionInput") as HTMLInputElement;
 
-  this.idInput.value = c.id;
+  console.log(c.id)
+
+  let editbtn = document.getElementById("editarbtn") as HTMLButtonElement;
+
+  this.idInput.value = c.id.toString();
   this.brand.value = c.marca;
   this.model.value = c.modelo;
   this.year.value = c.year;
   this.version.value = c.version;
 
+    // const ultimoId = (_cars:any[], index: number, maxId: number): number => {
+    //   let lastCar = _cars[index];
 
- // const index = this.cars.findIndex(el => el.id === c.id)
- // if (index > -1) {
- //   this.cars.splice(index, 1);
- // }
+    //   if (!lastCar){
+    //     return maxId;
+    //   } else{
 
-  /*this.cars.forEach(element => {
-    const asss = [element.id]
+    //     maxId = (maxId < lastCar.id) ? lastCar.id : maxId;
 
-     console.log()
-   });*/
-
-   //let lastId = this.cars.reduce((pre, cv) => {
-   // return (pre.id > cv.id) ? pre : cv
-   // }).id;
-
-    //console.log('ultimo id: ', lastId)
-
-    const ultimoId = (_cars:any[], index: number, maxId: number): number => {
-      let lastCar = _cars[index];
-
-      if (!lastCar){
-        return maxId;
-      } else{
-
-        maxId = (maxId < lastCar.id) ? lastCar.id : maxId;
-
-        index++;
-        return ultimoId(_cars, index, maxId);
-      }
-    }
+    //     index++;
+    //     return ultimoId(_cars, index, maxId);
+    //   }
+    // }
 
     //console.log('ultimo id: ', ultimoId(this.cars,0,0));
 
+
+    
+
   }
 
- deleteRow(c:any) {
-  console.log(c.id)
+ deleteRow() {
+
+  //console.log(c.id)
 
   this.idInput = document.getElementById("idInput") as HTMLInputElement;
+  console.log(this.idInput.value)
 
   const index = this.cars.findIndex(el => el.id === parseInt(this.idInput.value))
 
@@ -161,15 +153,10 @@ export class AppComponent  implements OnInit{
   }
 
   this.cleanRows();
-
   this.setStorage();
-
-  
-
   }
 
-  editCar(c:any) {
-    console.log(c.id)
+  editCar() {
 
     this.idInput = document.getElementById("idInput") as HTMLInputElement;
     this.brand = document.getElementById("marcaInput") as HTMLInputElement;
@@ -187,6 +174,7 @@ export class AppComponent  implements OnInit{
     this.cars[data].year = this.year.value;
     this.cars[data].version = this.version.value;
 
+    this.cleanRows();
     this.setStorage();
     
   }
